@@ -31,20 +31,47 @@
 
     function findWinner(playerSelection, computerSelection){
         if(playerSelection == computerSelection){
-            return "It's a tie!"
+            console.log("It's a tie!")
+            return 0
         } else if((playerSelection == "ROCK" && computerSelection == "PAPER")
                 || (playerSelection == "PAPER" && computerSelection == "SCISSOR")
                 || (playerSelection == "SCISSOR" && computerSelection == "ROCK")){
-            return "You Lose! " + computerSelection + " beats " + playerSelection
+            console.log("You Lose! " + computerSelection + " beats " + playerSelection)
+            return -1;
         } else {
-            return "You Win! " + playerSelection + " beats " + computerSelection
+            console.log("You Win! " + playerSelection + " beats " + computerSelection)
+            return 1;
         }
     }
 
+    function promptPlayer(){
+        let playerSelection
+        while(true){
+            playerSelection = prompt("Rock, paper or scissor?").toUpperCase()
+            if(playerSelection == "ROCK" || playerSelection == "PAPER" || playerSelection == "SCISSOR"){
+                break;
+            }
+        }
+        return playerSelection
+    }
+
     function game(){
-        for(i = 0; i<3; i++){
-            let playerSelection = prompt("Rock, paper or scissor")
-            console.log(playRound(playerSelection, computerPlay()))
+        let score = 0;
+        for(i = 0; i<5; i++){
+            let playerSelection = promptPlayer()
+            score += playRound(playerSelection, computerPlay())
+        }
+        printScore(score)
+    }
+
+    function printScore(score){
+        console.log("___ The game has ended ___")
+        if(score == 0){
+            console.log("It was a tie")
+        } else if(score < 0){
+            console.log("You lost. Your score was: " + score)
+        } else {
+            console.log("You won! Your score was: " + score)
         }
     }
 
